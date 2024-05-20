@@ -8,6 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isOn: Bool = true
+
+    var body: some View {
+        VStack {
+            HStack {
+                Toggle(isOn: $isOn) {
+                    Text(isOn ? "ON" : "OFF")
+                }
+                .padding()
+            }
+            .frame(width: 130)
+
+            ChildView()
+        }
+    }
+}
+
+struct ChildView: View {
     @ObservedObject var viewModel = ViewModel()
 
     var body: some View {
