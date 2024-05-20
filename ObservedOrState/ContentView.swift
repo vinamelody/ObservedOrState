@@ -10,6 +10,12 @@ import SwiftUI
 struct ContentView: View {
     @State var isOn: Bool = true
 
+    let viewModel: ViewModel
+
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+    }
+
     var body: some View {
         NavigationView {
             VStack {
@@ -21,10 +27,10 @@ struct ContentView: View {
                 }
                 .frame(width: 130)
 
-                ChildView(title: "Counter 1")
+                ChildView(viewModel: viewModel, title: "Counter 1")
 
                 NavigationLink {
-                    ChildView(title: "Counter 2")
+                    ChildView(viewModel: viewModel, title: "Counter 2")
                 } label: {
                     Text("Show Counter 2")
                 }
@@ -37,9 +43,14 @@ struct ContentView: View {
 }
 
 struct ChildView: View {
-    @StateObject var viewModel = ViewModel()
+    @ObservedObject var viewModel: ViewModel
 
     let title: String
+
+    init(viewModel: ViewModel, title: String) {
+        _viewModel = ObservedObject(wrappedValue: viewModel)
+        self.title = title
+    }
 
     var body: some View {
         HStack {
@@ -72,7 +83,7 @@ struct ChildView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(viewModel: ViewModel())
 }
 
 final class ViewModel: ObservableObject {
