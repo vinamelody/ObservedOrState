@@ -11,16 +11,27 @@ struct ContentView: View {
     @State var isOn: Bool = true
 
     var body: some View {
-        VStack {
-            HStack {
-                Toggle(isOn: $isOn) {
-                    Text(isOn ? "ON" : "OFF")
+        NavigationView {
+            VStack {
+                HStack {
+                    Toggle(isOn: $isOn) {
+                        Text(isOn ? "ON" : "OFF")
+                    }
+                    .padding()
                 }
-                .padding()
-            }
-            .frame(width: 130)
+                .frame(width: 130)
 
-            ChildView()
+                ChildView(title: "Counter 1")
+
+                NavigationLink {
+                    ChildView(title: "Counter 2")
+                } label: {
+                    Text("Show Counter 2")
+                }
+
+                Spacer()
+            }
+            .navigationTitle("Main")
         }
     }
 }
@@ -28,8 +39,11 @@ struct ContentView: View {
 struct ChildView: View {
     @StateObject var viewModel = ViewModel()
 
+    let title: String
+
     var body: some View {
         HStack {
+            Text(title)
             VStack {
                 Text(verbatim: "\(viewModel.leftCount)")
                 Button("Left", systemImage: "arrowshape.backward.circle", action: viewModel.leftButtonTapped)
