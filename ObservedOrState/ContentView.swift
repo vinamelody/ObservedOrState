@@ -26,7 +26,7 @@ struct ContentView: View {
 }
 
 struct ChildView: View {
-    @ObservedObject var viewModel = ViewModel()
+    @StateObject var viewModel = ViewModel()
 
     var body: some View {
         HStack {
