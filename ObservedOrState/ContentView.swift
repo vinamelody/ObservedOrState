@@ -44,12 +44,11 @@ struct ContentView: View {
 }
 
 final class ViewModel: ObservableObject {
-    private(set) var leftCount: Int = 0
-    private(set) var rightCount: Int = 0
+    @Published private(set) var leftCount: Int = 0
+    @Published private(set) var rightCount: Int = 0
 
     func leftButtonTapped() {
         leftCount += 1
-        objectWillChange.send()
     }
 
     func rightButtonTapped() {
